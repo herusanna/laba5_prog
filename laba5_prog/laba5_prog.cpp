@@ -1,9 +1,10 @@
-﻿/*5 variant*/
+/*5 variant*/
 #include <iostream>
 #include <fstream>
 #include <iomanip>
 #include<string.h>
 using namespace std;
+ofstream f;
 struct data
 {
     int day;
@@ -52,8 +53,6 @@ struct name
     char I[32];
     char O[32];
     void setName() {
-        ofstream f;
-        f.open("D:\\patient.txt", ios::out);
 
         cout << "\nFirst name : ";
         cin.ignore(cin.rdbuf()->in_avail());
@@ -68,9 +67,8 @@ struct name
         cin.getline(O, 32);
     }
     void showName(){
-        ofstream f;
-        f.open("D:\\patient.txt", ios::out);
-        cout << "FIO: " << F << " " << I << " " << O << endl;
+
+        f << "FIO: " << F << " " << I << " " << O << endl;
 
     }
 
@@ -86,9 +84,7 @@ struct adress
     int house;
     int apartment;
     void setAdress() {
-        ofstream f;
-        f.open("D:\\patient.txt", ios::out);
-
+      
         cout << endl << "Index: ";
         while (!(cin >> index))
         {
@@ -134,30 +130,25 @@ struct adress
         }
     }
     void showAdress() {
-        ofstream f;
-        f.open("D:\\patient.txt", ios::out);
 
-        cout << "Index: " << index << endl;
-        cout << "Country: " << country << endl;
-        cout << "Region: " << region << endl;
-        cout << "District: " << district << endl;
-        cout << "City: " << city << endl;
-        cout << "Street: " << street << endl;
-        cout << "House: " << house << endl;
-        cout << "Apartment: " << apartment;
+        f << "Index: " << index << endl;
+        f << "Country: " << country << endl;
+        f << "Region: " << region << endl;
+        f << "District: " << district << endl;
+        f << "City: " << city << endl;
+        f << "Street: " << street << endl;
+        f << "House: " << house << endl;
+        f << "Apartment: " << apartment;
     }
 };
 struct hospital
 {
     int NumHosp;
-    int Department;
     int NumCard;
     char Diagnosis[30];
     int BloodType;
     void setHospital()
     {
-        ofstream f;
-        f.open("D:\\patient.txt", ios::out);
 
         cout << endl << "Hospital number: ";
         while (!(cin >> NumHosp))
@@ -167,14 +158,7 @@ struct hospital
             cin.ignore(65535, '\n');
         }
 
-        cout << endl << "Hospital department: ";
-        while (!(cin >> Department))
-        {
-            cout << "Wrong input" << endl;
-            cin.clear();
-            cin.ignore(65535, '\n');
-        }
-
+       
         cout << endl << "Medical card number: ";
         while (!(cin >> NumCard))
         {
@@ -187,28 +171,27 @@ struct hospital
         cin.ignore(cin.rdbuf()->in_avail());
         cin.getline(Diagnosis, 30);
 
-        cout << endl << "Patient's blood type: ";
-        while (!(cin >> BloodType))
-        {
-            cout << "Wrong input" << endl;
-            cin.clear();
-            cin.ignore(65535, '\n');
-        }
+        cout << endl << "Patient's blood type: ";       
+            while (!(cin >> BloodType))
+            {
+            
+                cout << "Wrong input" << endl;
+                cin.clear();
+                cin.ignore(65535, '\n');
+            }
+        
     }
     void showHospital()
     {
-        ofstream f;
-        f.open("D:\\patient.txt", ios::out);
-
-        cout << endl << "Hospital's number: " << NumHosp;
-        cout << endl << "Hospital department: " << Department;
-        cout << endl << "Medical card number: " << NumCard;
-        cout << endl << "Patient's diagnosis: " << Diagnosis;
-        cout << endl << "Patient's blood type: " << BloodType;
+        f << endl << "Hospital's number: " << NumHosp;
+        f << endl << "Medical card number: " << NumCard;
+        f << endl << "Patient's diagnosis: " << Diagnosis;
+        f << endl << "Patient's blood type: " << BloodType;
     }
 };
 struct patient
 {
+    int Department;
     name person;
     adress home;
     hospital Data;
@@ -217,14 +200,19 @@ struct patient
     char Nationality[30];
     int Height;
     int Weight;
-    void setInfo() {
-        ofstream f;
-        f.open("D:\\patient.txt", ios::out);
-
+    void setInfo() 
+    {
+       
         person.setName();
         home.setAdress();
         Data.setHospital();
-
+        cout << endl << "Hospital department: ";
+        while (!(cin >> Department))
+        {
+            cout << "Wrong input" << endl;
+            cin.clear();
+            cin.ignore(65535, '\n');
+        }
         cout << endl << "Telephon number: ";
         cin >> Tele;
 
@@ -237,36 +225,42 @@ struct patient
         cin.getline(Nationality, 30);
 
         cout << endl << "Height: ";
-        cin >> Height;
-
+        while (!(cin >> Height))
+        {
+            cout << "Wrong input" << endl;
+            cin.clear();
+            cin.ignore(65535, '\n');
+        }
+       
         cout << endl << "Weight: ";
-        cin >> Weight;
+        while (!(cin >> Weight))
+        {
+            cout << "Wrong input" << endl;
+            cin.clear();
+            cin.ignore(65535, '\n');
+        }   
     }
-    void showInfo() {
-        ofstream f;
-        f.open("D:\\patient.txt", ios::out);
+    void showInfo() 
+    {
 
         person.showName();
 
-        cout << "Telephon number: " << Tele << endl;
+        f << "Telephon number: " << Tele << endl;
 
         home.showAdress();
 
         Data.showHospital();
-
-        cout<< endl << "Sex: " << Sex << endl;
-        cout << "Nationality: " << Nationality << endl;
-        cout << "Height: " << Height << endl;
-        cout << "Weight:" << Weight << endl;
+        f << endl << "Hospital department: " << Department;
+        f << endl << "Sex: " << Sex << endl;
+        f << "Nationality: " << Nationality << endl;
+        f << "Height: " << Height << endl;
+        f << "Weight:" << Weight << endl;
         
     }
 };
 
 void  InitPerson(patient* Man, int* size)
 {
-    ofstream f;
-    f.open("D:\\patient.txt", ios::out);
-
     for (size_t i = 0; i < *size; i++)
     {
         (Man + i)->setInfo();
@@ -275,8 +269,6 @@ void  InitPerson(patient* Man, int* size)
 
 void sortPerson(patient* Man, int* size) 
 {
-    ofstream f;
-    f.open("D:\\patient.txt", ios::out);
 
     for (int i = 0; i < *size; i++)
     {
@@ -295,60 +287,65 @@ void sortPerson(patient* Man, int* size)
         }
     }
 }
-void showPerson(patient* Man, int* size) {
-    ofstream f;
-    f.open("D:\\patient.txt", ios::out);
-
+void showPerson(patient* Man, int* size)
+{
     for (size_t i = 0; i < *size; i++)
     {
         (Man + i)->showInfo();
     }
 }
 
-void searchPerson(hospital* Men, patient* Man, int* size ) {
-
-        for (size_t i = 0; i < *size; i++)
-        {
-            if ((Men+i)->Department == 18)
-                (Man+i)->showInfo();
-        }
+void searchPerson(patient* Man, int* size ) 
+{
+    for (size_t i = 0; i < *size; i++)
+    {
+        if (((Man + i)->Department)==18)
+            (Man + i)->showInfo();
+    }
 }
-
 /*
-void searchPerson(patient* Man, int num) {
-    (Man + num - 1)->showInfo();
+void deletePerson(patient* Man, int* size, int num) 
+{
+    if (Man + num - 1) {
+        for (size_t i = num; i < *size; i++)
+        {
+            (Man + i) = (Man + i + 1);
+        }
+        --*size;
+    }
 }
 */
  void lvl1() {
-     ofstream f;
-     f.open("D:\\patient.txt", ios::out);     
+     f.open("D:\\patient.txt");     
      int size;
      //int num;
      cout << "Enter size of patients: ";
-     cin >> size;
+     while (!(cin >> size))
+     {
+         cout << "Wrong input" << endl;
+         cin.clear();
+         cin.ignore(65535, '\n');
+     }
      int* tempSize = &size;
      patient* Man = new patient[size];
-     //name* Person = new name[size];
-     hospital* Men = new hospital[size];
      InitPerson(Man, tempSize);
      sortPerson(Man, tempSize);
      int varForSwitch;
-   cout << "What would you like to do:" << endl << "1. See patient's data" << endl << "2.Search patient's data by hospital's department" << endl << "3. Exit the program";
-   cout << "Choose your action 1-3: ";
+   cout << "What would you like to do:" << endl << "1. Save data of patiens" << endl << "2.Save patient's data by hospital's department" << endl << "3. Exit the program";
+   cout << "\n\nChoose your action 1-3: ";
    cin >> varForSwitch;
    switch (varForSwitch)
    {
    case 1:
        for (int i = 0; i < size; i++)
        {
-           cout << "Patient " << i + 1 << ":" << endl << endl;
+           f << "Patient " << i + 1 << ":" << endl << endl;
            showPerson(Man, tempSize);
        }
        break;
    case 2:
-       cout << "See patients from 18 hospital's department" << endl;
-
-       //searchPerson(Men, Man, tempSize);
+       f << "Patients from 18 hospital's department:" << endl;
+       searchPerson(Man, tempSize);
        break;
    case 3:
        break;
@@ -359,7 +356,7 @@ void searchPerson(patient* Man, int num) {
    
      f.close();
  }
-
+ 
 void lvl2() {
     //FILE* read;
     int i = 0, n = 0, min = dat[0].year;
@@ -382,6 +379,17 @@ void lvl2() {
     F.close();
 }
 void lvl3() {
+    fstream F;
+    F.open("D:\\test.txt");
+    const int n = 3;
+    int matrix[n][n];
+    int k;
+    cin >> k;
+    for (size_t i = 0; i < n; i++)
+    {
+        F >> matrix[i][i];
+    }
+   
  /*   
     ifstream fstream("test.txt");
     while (fstream.peek() != EOF)
