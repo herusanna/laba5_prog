@@ -2,7 +2,9 @@
 #include <iostream>
 #include <fstream>
 #include <iomanip>
-#include<string.h>
+#include<string>
+#include <time.h>
+
 using namespace std;
 ofstream f;
 struct data
@@ -44,7 +46,7 @@ bool data::isCorrect()
             result = true;
         break;
     }
-    return result;
+          return result;
     }
 }
 struct name
@@ -66,7 +68,7 @@ struct name
         cout << endl << "Last name : ";
         cin.getline(O, 32);
     }
-    void showName(){
+    void showName() {
 
         f << "FIO: " << F << " " << I << " " << O << endl;
 
@@ -84,7 +86,7 @@ struct adress
     int house;
     int apartment;
     void setAdress() {
-      
+
         cout << endl << "Index: ";
         while (!(cin >> index))
         {
@@ -158,7 +160,7 @@ struct hospital
             cin.ignore(65535, '\n');
         }
 
-       
+
         cout << endl << "Medical card number: ";
         while (!(cin >> NumCard))
         {
@@ -171,15 +173,15 @@ struct hospital
         cin.ignore(cin.rdbuf()->in_avail());
         cin.getline(Diagnosis, 30);
 
-        cout << endl << "Patient's blood type: ";       
-            while (!(cin >> BloodType))
-            {
-            
-                cout << "Wrong input" << endl;
-                cin.clear();
-                cin.ignore(65535, '\n');
-            }
-        
+        cout << endl << "Patient's blood type: ";
+        while (!(cin >> BloodType))
+        {
+
+            cout << "Wrong input" << endl;
+            cin.clear();
+            cin.ignore(65535, '\n');
+        }
+
     }
     void showHospital()
     {
@@ -200,9 +202,9 @@ struct patient
     char Nationality[30];
     int Height;
     int Weight;
-    void setInfo() 
+    void setInfo()
     {
-       
+
         person.setName();
         home.setAdress();
         Data.setHospital();
@@ -216,7 +218,7 @@ struct patient
         cout << endl << "Telephon number: ";
         cin >> Tele;
 
-        cout  <<endl << "Sex: ";
+        cout << endl << "Sex: ";
         cin.ignore(cin.rdbuf()->in_avail());
         cin.getline(Sex, 8);
 
@@ -231,16 +233,16 @@ struct patient
             cin.clear();
             cin.ignore(65535, '\n');
         }
-       
+
         cout << endl << "Weight: ";
         while (!(cin >> Weight))
         {
             cout << "Wrong input" << endl;
             cin.clear();
             cin.ignore(65535, '\n');
-        }   
+        }
     }
-    void showInfo() 
+    void showInfo()
     {
 
         person.showName();
@@ -255,7 +257,7 @@ struct patient
         f << "Nationality: " << Nationality << endl;
         f << "Height: " << Height << endl;
         f << "Weight:" << Weight << endl;
-        
+
     }
 };
 
@@ -267,7 +269,7 @@ void  InitPerson(patient* Man, int* size)
     }
 }
 
-void sortPerson(patient* Man, int* size) 
+void sortPerson(patient* Man, int* size)
 {
 
     for (int i = 0; i < *size; i++)
@@ -295,16 +297,16 @@ void showPerson(patient* Man, int* size)
     }
 }
 
-void searchPerson(patient* Man, int* size ) 
+void searchPerson(patient* Man, int* size)
 {
     for (size_t i = 0; i < *size; i++)
     {
-        if (((Man + i)->Department)==18)
+        if (((Man + i)->Department) == 18)
             (Man + i)->showInfo();
     }
 }
 /*
-void deletePerson(patient* Man, int* size, int num) 
+void deletePerson(patient* Man, int* size, int num)
 {
     if (Man + num - 1) {
         for (size_t i = num; i < *size; i++)
@@ -315,50 +317,48 @@ void deletePerson(patient* Man, int* size, int num)
     }
 }
 */
- void lvl1() {
-     f.open("D:\\patient.txt");     
-     int size;
-     //int num;
-     cout << "Enter size of patients: ";
-     while (!(cin >> size))
-     {
-         cout << "Wrong input" << endl;
-         cin.clear();
-         cin.ignore(65535, '\n');
-     }
-     int* tempSize = &size;
-     patient* Man = new patient[size];
-     InitPerson(Man, tempSize);
-     sortPerson(Man, tempSize);
-     int varForSwitch;
-   cout << "What would you like to do:" << endl << "1. Save data of patiens" << endl << "2.Save patient's data by hospital's department" << endl << "3. Exit the program";
-   cout << "\n\nChoose your action 1-3: ";
-   cin >> varForSwitch;
-   switch (varForSwitch)
-   {
-   case 1:
-       for (int i = 0; i < size; i++)
-       {
-           f << "Patient " << i + 1 << ":" << endl << endl;
-           showPerson(Man, tempSize);
-       }
-       break;
-   case 2:
-       f << "Patients from 18 hospital's department:" << endl;
-       searchPerson(Man, tempSize);
-       break;
-   case 3:
-       break;
-   default:
-       cout << "Action not found." << endl;
-       break;
-   }
-   
-     f.close();
- }
- 
+void lvl1() {
+    f.open("D:\\patient.txt");
+    int size;
+    //int num;
+    cout << "Enter size of patients: ";
+    while (!(cin >> size))
+    {
+        cout << "Wrong input" << endl;
+        cin.clear();
+        cin.ignore(65535, '\n');
+    }
+    int* tempSize = &size;
+    patient* Man = new patient[size];
+    InitPerson(Man, tempSize);
+    sortPerson(Man, tempSize);
+    int varForSwitch;
+    cout << "What would you like to do:" << endl << "1. Save data of patiens" << endl << "2.Save patient's data by hospital's department" << endl << "3. Exit the program";
+    cout << "\n\nChoose your action 1-3: ";
+    cin >> varForSwitch;
+    switch (varForSwitch)
+    {
+    case 1:
+        for (int i = 0; i < size; i++)
+        {
+            f << "Patient " << i + 1 << ":" << endl << endl;
+            showPerson(Man, tempSize);
+        }
+        break;
+    case 2:
+        f << "Patients from 18 hospital's department:" << endl;
+        searchPerson(Man, tempSize);
+        break;
+    case 3:
+        break;
+    default:
+        cout << "Action not found." << endl;
+        break;
+    }
+
+    f.close();
+}
 void lvl2() {
-    //FILE* read;
     int i = 0, n = 0, min = dat[0].year;
     fstream F;
     F.open("D:\\data.txt");
@@ -380,31 +380,71 @@ void lvl2() {
 }
 void lvl3() {
     fstream F;
+    fstream FALE;
     F.open("D:\\test.txt");
-    const int n = 3;
-    int matrix[n][n];
-    int k;
-    cin >> k;
-    for (size_t i = 0; i < n; i++)
-    {
-        F >> matrix[i][i];
-    }
-   
- /*   
-    ifstream fstream("test.txt");
-    while (fstream.peek() != EOF)
-    {
-        string line;
-        while (getline(fstream, line) && !line.empty())
-        {
-            double x;
-            for (stringstream stream(line); stream >> x;)
-                cout << x << " ";
-            cout <<endl;
+    FALE.open("D:\\det.txt");
+    srand(time(0));
+    string line;
+    int zindex, yindex = 3, xindex = 3, det;
+    cout << "\nInput quantity of matrix:\t";
+    if (F.is_open()) {
+        cin >> zindex;
+        int*** arr = new int** [zindex];
+        for (int i = 0; i < zindex; i++) {
+            arr[i] = new int* [yindex];
+
+            for (int j = 0; j < yindex; j++) {
+                arr[i][j] = new int[xindex];
+            }
         }
-        cout << "end of matrix" << endl;
+        for (int z = 0; z < zindex; z++)
+            for (int y = 0; y < yindex; y++)
+                for (int x = 0; x < xindex; x++)
+                    arr[z][y][x] = rand() % 5 + 1;
+
+        for (int z = 0; z < zindex; z++) {
+            for (int y = 0; y < yindex; y++) {
+                for (int x = 0; x < xindex; x++) {
+                    F.width(3);
+                    F << arr[z][y][x];
+                }
+                F << endl;
+            }
+            F << endl;
+        }
+        for (int z = 0; z < zindex; z++) {
+            det = arr[z][0][0] * arr[z][1][1] * arr[z][2][2] + arr[z][2][0] * arr[z][0][1] * arr[z][1][2] + arr[z][1][0] * arr[z][2][1] * arr[z][0][2] - arr[z][2][0] * arr[z][1][1] * arr[z][0][2] - arr[z][0][0] * arr[z][2][1] * arr[z][1][2] - arr[z][1][0] * arr[z][0][1] * arr[z][2][2];
+            FALE << det;
+            FALE << endl;
+        }
+        FALE.close();
+        F.close();
+        /*ifstream F;
+        F.open("D:\\test.txt");
+        while (getline(F, line))
+        {
+            cout << line << endl;
+        }*/
+        ifstream FALE;
+        FALE.open("D:\\det.txt");
+        int k = 1;
+        for (int z = 0; z < zindex; z++) {
+        equa:
+            if (k > zindex)
+                break;
+            cout << k << " equation = " << arr[z][0][0] << " * " << arr[z][1][1] << " * " << arr[z][2][2] << " + " << arr[z][2][0] << " * " << arr[z][0][1] << " * " << arr[z][1][2] << " + " << arr[z][1][0] << " * " << arr[z][2][1] << " * " << arr[z][0][2] << " - " << arr[z][2][0] << " * " << arr[z][1][1] << " * " << arr[z][0][2] << " - " << arr[z][0][0] << " * " << arr[z][2][1] << " * " << arr[z][1][2] << " - " << arr[z][1][0] << " * " << arr[z][0][1] << " * " << arr[z][2][2] << " = ";
+            if (FALE.is_open()) {
+                while (getline(FALE, line))
+                {
+                    cout << line << endl;
+                    k++;
+                    goto equa;
+                }
+            }
+        }                           
     }
-   */
+    FALE.close();
+    F.close();    
 }
 int main()
 {
